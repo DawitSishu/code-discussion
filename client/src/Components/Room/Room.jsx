@@ -7,10 +7,12 @@ function Room({onSubmit}) {
     const {
         register,
         handleSubmit,
+        reset,
          formState: { errors },
     } = useForm();
     
 const onSend = (data)=>{
+    reset()
     onSubmit(data)
 }
 
