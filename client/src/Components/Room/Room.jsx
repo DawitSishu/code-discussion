@@ -3,6 +3,7 @@ import { useRef,useEffect } from "react"
 import InputComponent from "./InputComponent"
 import Message from "./Message"
 import ScrollableFeed from 'react-scrollable-feed'
+import RoomInfo from "./RoomInfo"
 
 function Room({onSubmit,messages,senderId}) {
    
@@ -29,7 +30,7 @@ const onSend = (data)=>{
    spacing={2}
   >
     <Grid item  xs={10} md={5} >
-        <Container color="red" sx={{backgroundColor:"red",marginTop:10}}>x</Container>
+       <RoomInfo />
     </Grid>
     <Grid item xs={10} md={7} sx={
     {
@@ -37,9 +38,7 @@ const onSend = (data)=>{
         boxShadow: "10px 10px 10px 10px grey",
         // marginTop: 10,
         // padding:5
-        // Left: 10,
-        
-        
+        // Left: 10,  
     }
         }>
      
