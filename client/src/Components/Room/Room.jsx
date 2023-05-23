@@ -1,33 +1,58 @@
-import { useForm } from 'react-hook-form';
-import {Box, Button, OutlinedInput, Typography} from "@mui/material"
+import { Container, Grid } from "@mui/material"
+import { useRef,useEffect } from "react"
+import InputComponent from "./InputComponent"
+import Message from "./Message"
+import ScrollableFeed from 'react-scrollable-feed'
 
-
-
-function Room({onSubmit}) {
-    const {
-        register,
-        handleSubmit,
-        reset,
-         formState: { errors },
-    } = useForm();
-    
+function Room({onSubmit,messages,senderId}) {
+   
 const onSend = (data)=>{
-    reset()
     onSubmit(data)
 }
+    const messagesEndRef = useRef(null)
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+      }
+    
+      useEffect(() => {
+        scrollToBottom()
+      }, messages);
+  
 
   return (
-    <Box 
-        component="form"
-        onSubmit={handleSubmit(onSend)}>
-            <OutlinedInput
-                placeholder='write Message'
-                id='message'
-                name='message' 
-                {...register("message", {required: "message can't be empty"})}/>
-        {errors.message && <Typography color="red">message can't be Empty</Typography>}
-        <Button type='submit'>send</Button>
-    </Box>
+   <Grid 
+    sx={{
+        marginTop:5,
+        padding:5
+    }} 
+   container 
+   spacing={2}
+  >
+    <Grid item  xs={10} md={5} >
+        <Container color="red" sx={{backgroundColor:"red",marginTop:10}}>x</Container>
+    </Grid>
+    <Grid item xs={10} md={7} sx={
+    {
+        borderRadius:5,
+        boxShadow: "10px 10px 10px 10px grey",
+        // marginTop: 10,
+        // padding:5
+        // Left: 10,
+        
+        
+    }
+        }>
+     
+        <Grid   sx={{maxHeight: '60vh',overflowY: "hidden"}}>
+        <ScrollableFeed forceScroll={true}>
+       {messages.map((msg,idx)=><Message message={msg} key={idx}  ID={senderId}/>)}
+        </ScrollableFeed >
+        </Grid>
+        <Grid>
+            <InputComponent onSend={onSend} />
+        </Grid>
+    </Grid>
+   </Grid>
   )
 }
 

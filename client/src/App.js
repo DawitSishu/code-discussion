@@ -13,6 +13,7 @@ socket.on("connect", () => {
   })
 function App() {
   const [msgr,setMsg] =useState([])
+  let sender =false;
   
   const handleMsg = (data) => {
       socket.emit("newMsg",{message:data.message,id})
@@ -27,10 +28,10 @@ function App() {
 
   return (
     <div className="App">
-      {console.log(msgr)}
+      {/* {console.log(msgr)}
     {msgr.map((msgs,idx) => { return(<h5 key={idx}>{msgs.message} is from {msgs.id}</h5>)})
-                   }
-    <Room  onSubmit={handleMsg}/>
+                   } */}
+    <Room  onSubmit={handleMsg} messages={msgr} senderId={id}/>
     </div>
   );
 }
