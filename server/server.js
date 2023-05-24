@@ -1,3 +1,4 @@
+const connectToDb = require('./config/ConnectDB');
 
 const app = require('express')();
 const dotenv = require("dotenv").config()
@@ -12,12 +13,16 @@ const io = require('socket.io')(server,{
     }
   })
 
+  connectToDb()
 io.on("connection", (socket) => {
     console.log("someone connected..")
     // console.log("socket is: ", socket)
     socket.on("newMsg", (msg) => {
       console.log(msg)
-      io.emit("newMsg",msg)
+      io.to('ten').emit("newMsg",msg)
+    })
+    socket.on("joinRoom",room=>{
+      socket.join(room)
     })
 });
 
