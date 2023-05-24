@@ -21,6 +21,8 @@ io.on("connection", (socket) => {
       console.log(msg)
       io.to('ten').emit("newMsg",msg)
     })
+    //when someone jons send all the previous
+    //messages
     socket.on("joinRoom",room=>{
       socket.join(room)
     })
