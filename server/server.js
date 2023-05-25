@@ -13,20 +13,20 @@ const io = require('socket.io')(server,{
     }
   })
 
-  connectToDb()
-io.on("connection", (socket) => {
-    console.log("someone connected..")
-    // console.log("socket is: ", socket)
-    socket.on("newMsg", (msg) => {
-      console.log(msg)
-      io.to('ten').emit("newMsg",msg)
-    })
-    //when someone jons send all the previous
-    //messages
-    socket.on("joinRoom",room=>{
-      socket.join(room)
-    })
-});
+connectToDb()
+   io.on("connection", (socket) => {
+       console.log("someone connected..")
+       // console.log("socket is: ", socket)
+       socket.on("newMsg", (msg) => {
+         console.log(msg)
+         io.emit("newMsg",msg)
+       })
+       //when someone jons send all the previous
+       //messages
+       socket.on("joinRoom",room=>{
+         socket.join(room)
+       })
+   });
 
 server.listen(PORT,()=> {
     console.log(`server Started on Port ${PORT}...`)
