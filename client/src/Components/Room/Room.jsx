@@ -5,7 +5,7 @@ import Message from "./Message"
 import ScrollableFeed from 'react-scrollable-feed'
 import RoomInfo from "./RoomInfo"
 
-function Room({onSubmit,messages,senderId,canSend}) {
+function Room({onSubmit,messages,senderId,canSend,username}) {
    
 const onSend = (data)=>{
     onSubmit(data)
@@ -44,7 +44,7 @@ const onSend = (data)=>{
      
         <Grid   sx={{maxHeight: '60vh',overflowY: "hidden"}}>
         <ScrollableFeed forceScroll={true}>
-       { messages.map((msg,idx)=><Message message={msg} key={idx}  ID={senderId}/>)}
+       { messages.map((msg,idx)=><Message message={msg} key={idx}  ID={senderId} username={username}/>)}
         </ScrollableFeed >
         </Grid>
         <Grid>

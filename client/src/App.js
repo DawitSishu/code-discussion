@@ -88,14 +88,14 @@ function App() {
     //leave a room btn(conditionally render it)  
     //show online ppl using id(in room firebase)
     <div className="App">
-      {user && console.log(user.uid)}
+      {user && console.log(user.displayName)}
       {
         !user  ? <Button onClick={handleSignIn} disabled={loadig} variant="contained" >sign in</Button>
       
       : !inRoom ? <RoomSelector  handleRoom={handleRoom} rooms={availableRooms}/>
       :<>
           <Button onClick={handleSignout}  variant="contained" color='error'>sign out</Button>
-    <Room  onSubmit={handleMsg} messages={chatMessage}  senderId={user.uid}/>
+    <Room  onSubmit={handleMsg} messages={chatMessage}  senderId={user.uid} username={user.displayName}/>
         </>
       }
     </div>
