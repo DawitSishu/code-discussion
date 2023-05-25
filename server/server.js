@@ -1,5 +1,5 @@
 const connectToDb = require('./config/ConnectDB');
-
+const Messages = require('./models/MessageModel')
 const app = require('express')();
 const dotenv = require("dotenv").config()
 
@@ -17,14 +17,25 @@ connectToDb()
    io.on("connection", (socket) => {
        console.log("someone connected..")
        // console.log("socket is: ", socket)
-       socket.on("newMsg", (msg) => {
-         console.log(msg)
-         io.emit("newMsg",msg)
+       socket.on("newMsg", async (messageData) => {
+        //  console.log(messageData)
+       let mainMessage = await Messages.create({
+          user_id:messageData.id,
+          message:messageData.message,
+          room:messageData.room
+         })
+         console.log(messageData);
+         io.to(messageData.room).emit("newMsg",mainMessage)
        })
        //when someone jons send all the previous
        //messages
-       socket.on("joinRoom",room=>{
+       socket.on("joinRoom",async room=>{
          socket.join(room)
+        const oldMsg = await Messages.find({room})
+        socket.emit('oldMsg',oldMsg)
+        // socket.emit('newMsg',{
+
+        // })
        })
    });
 

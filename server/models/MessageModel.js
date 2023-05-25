@@ -9,12 +9,13 @@ const MessageSchema = mongoose.Schema({
         type: String,
         required:[true, "message can't be empty"]
     } ,
-    chat: {
+    room: {
         type: String,
-        required:[true, "message can't be empty"]
+        required:[true, "there must be a room"]
     }
 },{
     timestamps:  true,
+    expireAfterHours:30
 })
 
-module.exports = mongoose.model("Messages",ContactSchema);
+module.exports = mongoose.model("Messages",MessageSchema);

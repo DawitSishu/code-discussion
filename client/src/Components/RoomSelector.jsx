@@ -6,7 +6,7 @@ import Select from '@mui/material/Select';
 import { Button } from '@mui/base';
 import { useState } from 'react';
 
-function RoomSelector({handleRoom}) {
+function RoomSelector({handleRoom,rooms}) {
 const [room,setRoom] = useState('')
 
    
@@ -22,9 +22,14 @@ const [room,setRoom] = useState('')
           label="room"
           onChange={(e)=>setRoom(e.target.value)}
         >
-          <MenuItem value={'ten'}>Ten</MenuItem>
+          {
+            rooms.map((roomItem,idx) =>{
+              return <MenuItem value={roomItem} key={idx}>{roomItem}</MenuItem>
+            })
+          }
+          {/* <MenuItem value={'ten'}>Ten</MenuItem>
           <MenuItem value={'twenty'}>Twenty</MenuItem>
-          <MenuItem value={'30'}>Thirty</MenuItem>
+          <MenuItem value={'30'}>Thirty</MenuItem> */}
         </Select>
         <Button onClick={()=>handleRoom(room)}>Join</Button>
       </FormControl>

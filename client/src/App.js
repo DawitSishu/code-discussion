@@ -9,50 +9,74 @@ import { Button } from '@mui/material';
 
 
 
-
-let id = ''
+let availableRooms = [
+  "js",
+  "php",
+  "python",
+  "c++"
+]
+let id =''
 const socket = io.connect("http://localhost:5000");
 socket.on("connect", () => {
-    console.log(socket); 
-    id=socket.id
-    console.log(id);
-  })
+  console.log(socket); 
+  id=socket.id
+  console.log(id);
+})
 function App() {
+  const [userRoom, setUserRoom] = useState('')
   const [user,setUser] = useState(null)
   const [inRoom,setInRoom] = useState(false)
   const [loadig,setLoading] = useState(false)
-  const [msgr,setMsg] =useState([])
+  const [chatMessage,setChatMessage] =useState([])
+
   
   
   const handleSignIn = async() =>{
-    setLoading(true)
-    const response =  await signInWithPopup(auth,provider);
-    setUser(response.user)
+    try{
+      setLoading(true)
+      const response =  await signInWithPopup(auth,provider);
+      setUser(response.user)
+    }catch(err){
+      setLoading(false);
+      alert(err.message)
+    }
+   
   }
 
   const handleSignout = () =>{
     setLoading(false)
+    setInRoom('')
+    setInRoom(false)
     setUser(null)
   }
 
 
 
   const handleMsg = (data) => {
-      socket.emit("newMsg",{message:data.message,id})
+      socket.emit("newMsg",
+            {message:data.message,
+              id:user.uid,
+              room:userRoom})
   }
 
 
-  //make a joined room Sate and send the jooined room data with it
+  //make a joined room Sate and send the jooined room data with it 
   useEffect(()=>{
     socket.on("newMsg",(data)=>{
-      setMsg([...msgr,data])
+      setChatMessage([...chatMessage,data])
       
     })
+  })
+
+  socket.on("oldMsg",msgs=>{
+    console.log(msgs);
+    setChatMessage([...chatMessage,...msgs])
   })
 
   const handleRoom = (roomVal) =>{
     setInRoom(true)
     console.log(roomVal);
+    setUserRoom(roomVal)
     // setRoom(roomVal)
     socket.emit("joinRoom",roomVal)
   }
@@ -61,23 +85,19 @@ function App() {
     //firebase auth and use state to conditionally render it  --done
     //even disable send button if the user is not in a room   --done
     // show ppl who r in the room
-    //leave a room btn(conditionally render it)
+    //leave a room btn(conditionally render it)  
     //show online ppl using id(in room firebase)
     <div className="App">
+      {user && console.log(user.uid)}
       {
         !user  ? <Button onClick={handleSignIn} disabled={loadig} variant="contained" >sign in</Button>
       
-      : <>
-          {!inRoom && <RoomSelector  handleRoom={handleRoom}/>}
+      : !inRoom ? <RoomSelector  handleRoom={handleRoom} rooms={availableRooms}/>
+      :<>
           <Button onClick={handleSignout}  variant="contained" color='error'>sign out</Button>
-    <Room  onSubmit={handleMsg} messages={msgr} senderId={id} canSend = {inRoom}/>
+    <Room  onSubmit={handleMsg} messages={chatMessage}  senderId={user.uid}/>
         </>
       }
-      {/* {console.log(msgr)}
-    {msgr.map((msgs,idx) => { return(<h5 key={idx}>{msgs.message} is from {msgs.id}</h5>)})
-                   } */}
-                  {/* {!inRoom && <RoomSelector  handleRoom={handleRoom}/>}*/}
-    <Room  onSubmit={handleMsg} messages={msgr} senderId={id} canSend = {!inRoom}/> 
     </div>
   );
 }

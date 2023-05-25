@@ -10,14 +10,14 @@ function Room({onSubmit,messages,senderId,canSend}) {
 const onSend = (data)=>{
     onSubmit(data)
 }
-    const messagesEndRef = useRef(null)
-    const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-      }
+    // const messagesEndRef = useRef(null)
+    // const scrollToBottom = () => {
+    //     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+    //   }
     
-      useEffect(() => {
-        scrollToBottom()
-      }, messages);
+    //   useEffect(() => {
+    //     scrollToBottom()
+    //   }, messages);
   
 
   return (
@@ -44,7 +44,7 @@ const onSend = (data)=>{
      
         <Grid   sx={{maxHeight: '60vh',overflowY: "hidden"}}>
         <ScrollableFeed forceScroll={true}>
-       {messages.map((msg,idx)=><Message message={msg} key={idx}  ID={senderId}/>)}
+       { messages.map((msg,idx)=><Message message={msg} key={idx}  ID={senderId}/>)}
         </ScrollableFeed >
         </Grid>
         <Grid>
