@@ -1,9 +1,10 @@
-import { Container, Grid } from "@mui/material"
+import { Box, Container, Grid } from "@mui/material"
 import { useRef,useEffect } from "react"
 import InputComponent from "./InputComponent"
 import Message from "./Message"
 import ScrollableFeed from 'react-scrollable-feed'
 import RoomInfo from "./RoomInfo"
+
 
 function Room({onSubmit,messages,senderId,canSend,username}) {
    
@@ -21,10 +22,23 @@ const onSend = (data)=>{
   
 
   return (
+    
+    <Grid  m={5}
+    // sx={{
+    //     backgroundImage: `url(${bg})`,
+    //     backgroundRepeat: 'no-repeat',
+    //     backgroundSize: 'cover',
+    //     backgroundPosition: 'center',
+    //     minHeight: '100vh', 
+    // }}
+    > 
    <Grid 
     sx={{
         marginTop:5,
-        padding:5
+        padding:5,
+        borderRadius:5,
+      boxShadow: "10px 10px 10px 10px grey",
+      backgroundColor:"white"
     }} 
    container 
    spacing={2}
@@ -34,8 +48,9 @@ const onSend = (data)=>{
     </Grid>
     <Grid item xs={10} md={7} sx={
     {
-        borderRadius:5,
-        boxShadow: "10px 10px 10px 10px grey",
+        
+        // borderRadius:5,
+        // boxShadow: "10px 10px 10px 10px grey",
         // marginTop: 10,
         // padding:5
         // Left: 10,  
@@ -52,6 +67,7 @@ const onSend = (data)=>{
         </Grid>
     </Grid>
    </Grid>
+    </Grid>
   )
 }
 

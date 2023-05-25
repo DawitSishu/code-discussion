@@ -4,8 +4,9 @@ import {useEffect, useState} from 'react'
 import {auth,provider} from './firebase'
 import {signInWithPopup} from 'firebase/auth'
 import Room from './Components/Room/Room';
-import RoomSelector from './Components/RoomSelector';
+import RoomSelector from './Components/utils/RoomSelector';
 import { Button } from '@mui/material';
+import SignIn from './Components/utils/SignIn';
 
 
 
@@ -28,7 +29,7 @@ function App() {
   const [inRoom,setInRoom] = useState(false)
   const [loadig,setLoading] = useState(false)
   const [chatMessage,setChatMessage] =useState([])
-
+  const [rooomData,setRoomData] = useState(null);
   
   
   const handleSignIn = async() =>{
@@ -42,6 +43,10 @@ function App() {
     }
    
   }
+
+  socket.on("rooomData",data=>{
+    setRoomData(data)
+  })
 
   const handleSignout = () =>{
     setLoading(false)
@@ -73,12 +78,15 @@ function App() {
     setChatMessage([...chatMessage,...msgs])
   })
 
+  const handleRoomLeft = () =>{
+    socket.emit("leaveRoom",{room:userRoom,uid:user.uid})
+  }
   const handleRoom = (roomVal) =>{
     setInRoom(true)
     console.log(roomVal);
     setUserRoom(roomVal)
     // setRoom(roomVal)
-    socket.emit("joinRoom",roomVal)
+    // socket.emit("joinRoom",{room: roomVal, username:user.displayName,uid:user.uid})
   }
   return (
 
@@ -87,10 +95,10 @@ function App() {
     // show ppl who r in the room
     //leave a room btn(conditionally render it)  
     //show online ppl using id(in room firebase)
-    <div className="App">
-      {user && console.log(user.displayName)}
+    <>
+      {rooomData && console.log(rooomData)}
       {
-        !user  ? <Button onClick={handleSignIn} disabled={loadig} variant="contained" >sign in</Button>
+        !user  ? <SignIn handleSignIn={handleSignIn} loadig={loadig}/>
       
       : !inRoom ? <RoomSelector  handleRoom={handleRoom} rooms={availableRooms}/>
       :<>
@@ -98,7 +106,7 @@ function App() {
     <Room  onSubmit={handleMsg} messages={chatMessage}  senderId={user.uid} username={user.displayName}/>
         </>
       }
-    </div>
+    </>
   );
 }
 

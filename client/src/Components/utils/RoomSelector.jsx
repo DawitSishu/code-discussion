@@ -3,7 +3,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { Button } from '@mui/base';
+import { Button ,Typography} from '@mui/material';
 import { useState } from 'react';
 
 function RoomSelector({handleRoom,rooms}) {
@@ -12,7 +12,20 @@ const [room,setRoom] = useState('')
    
   return (
     <Box 
+    sx={{
+      borderRadius:5,
+      boxShadow: "10px 10px 10px 10px grey",
+      margin: 10,
+      backgroundColor:"white",
+      padding: 10,
+      display:"flex",
+      flexDirection:"column",
+      justifyContent:"center",
+      alignItems:"center"
+    }}
     >
+      <Typography variant='h4'>Join Your Preferd Room</Typography>
+      <br /><br />
       <FormControl >
         <InputLabel id="demo-simple-select-label">room</InputLabel>
         <Select
@@ -27,11 +40,14 @@ const [room,setRoom] = useState('')
               return <MenuItem value={roomItem} key={idx}>{roomItem}</MenuItem>
             })
           }
-          {/* <MenuItem value={'ten'}>Ten</MenuItem>
-          <MenuItem value={'twenty'}>Twenty</MenuItem>
-          <MenuItem value={'30'}>Thirty</MenuItem> */}
         </Select>
-        <Button onClick={()=>handleRoom(room)}>Join</Button>
+        <br />
+        <Button 
+            onClick={()=>handleRoom(room)} 
+            variant="contained" 
+            sx={{width:"50vw" ,textTransform:" lowercase !important"}}>
+                Join
+        </Button>
       </FormControl>
     </Box>
   )
