@@ -5,7 +5,7 @@ import Message from "./Message"
 import ScrollableFeed from 'react-scrollable-feed'
 import RoomInfo from "./RoomInfo"
 
-function Room({onSubmit,messages,senderId}) {
+function Room({onSubmit,messages,senderId,canSend}) {
    
 const onSend = (data)=>{
     onSubmit(data)
@@ -48,7 +48,7 @@ const onSend = (data)=>{
         </ScrollableFeed >
         </Grid>
         <Grid>
-            <InputComponent onSend={onSend} />
+            <InputComponent onSend={onSend} canSend={canSend} />
         </Grid>
     </Grid>
    </Grid>

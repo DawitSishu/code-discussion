@@ -5,7 +5,7 @@ import {auth,provider} from './firebase'
 import {signInWithPopup} from 'firebase/auth'
 import Room from './Components/Room/Room';
 import RoomSelector from './Components/RoomSelector';
-import { Button } from '@mui/base';
+import { Button } from '@mui/material';
 
 
 
@@ -25,12 +25,13 @@ function App() {
   
   
   const handleSignIn = async() =>{
-    setLoading(false)
+    setLoading(true)
     const response =  await signInWithPopup(auth,provider);
     setUser(response.user)
   }
 
-  consthandleSignout = () =>{
+  const handleSignout = () =>{
+    setLoading(false)
     setUser(null)
   }
 
@@ -57,19 +58,26 @@ function App() {
   }
   return (
 
-    //firebase auth and use state to conditionally render it
-    //even disable send button if theuser is ot in a room
-    // show ppl whore in the room
+    //firebase auth and use state to conditionally render it  --done
+    //even disable send button if the user is not in a room   --done
+    // show ppl who r in the room
     //leave a room btn(conditionally render it)
     //show online ppl using id(in room firebase)
     <div className="App">
-      { console.log(user) }
-      <Button onClick={handleSignIn} disabled={loadig}>sign in</Button>
+      {
+        !user  ? <Button onClick={handleSignIn} disabled={loadig} variant="contained" >sign in</Button>
+      
+      : <>
+          {!inRoom && <RoomSelector  handleRoom={handleRoom}/>}
+          <Button onClick={handleSignout}  variant="contained" color='error'>sign out</Button>
+    <Room  onSubmit={handleMsg} messages={msgr} senderId={id} canSend = {inRoom}/>
+        </>
+      }
       {/* {console.log(msgr)}
     {msgr.map((msgs,idx) => { return(<h5 key={idx}>{msgs.message} is from {msgs.id}</h5>)})
                    } */}
-                  {/* {!inRoom && <RoomSelector  handleRoom={handleRoom}/>}
-    <Room  onSubmit={handleMsg} messages={msgr} senderId={id}/> */}
+                  {/* {!inRoom && <RoomSelector  handleRoom={handleRoom}/>}*/}
+    <Room  onSubmit={handleMsg} messages={msgr} senderId={id} canSend = {!inRoom}/> 
     </div>
   );
 }
