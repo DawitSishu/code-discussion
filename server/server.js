@@ -2,7 +2,9 @@ const connectToDb = require('./config/ConnectDB');
 const Messages = require('./models/MessageModel');
 const Rooms = require('./models/RoomModel')
 const app = require('express')();
+var cors = require('cors')
 const dotenv = require("dotenv").config()
+app.use(cors())
 
 const PORT = process.env.PORT || 5000;
 
