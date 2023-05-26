@@ -15,7 +15,7 @@ let availableRooms = [
   "python",
   "c++"
 ]
-const socket = io.connect("http://localhost:5000");
+const socket = io.connect("https://code-discuss-server.onrender.com");
 socket.on("connect", () => {
   console.log(socket); 
 })
@@ -88,16 +88,9 @@ function App() {
   const handleRoom = (roomVal) =>{
     setInRoom(true)
     setUserRoom(roomVal)
-    // setRoom(roomVal)
     socket.emit("joinRoom",{room: roomVal, username:user.displayName,uid:user.uid})
   }
   return (
-
-    //firebase auth and use state to conditionally render it  --done
-    //even disable send button if the user is not in a room   --done
-    // show ppl who r in the room
-    //leave a room btn(conditionally render it)  --done
-    //show online ppl using id(in room firebase)
     <>
       {
         !user  ? <SignIn handleSignIn={handleSignIn} loadig={loadig}/>
