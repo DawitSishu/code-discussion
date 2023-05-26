@@ -18,34 +18,34 @@ https://code-discussion.vercel.app/
 
 ## Getting Started
 using the predefined images in docker hub (Recommended)
-  !! Make sure to install docker on your machine
-    --pull the server docker image file
-        docker pull  dawitsishu/code-discuss:server
-    --pull the client docker image file
-        docker pull  dawitsishu/code-discuss:client
-    --run the downloaded client image files by building a container
-        docker run --name <prefered-container-name> -p 3000:3000 dawitsishu/code-discuss:client
-    --run the downloaded server image files by building a container
-        docker run --name <prefered-container-name> -p 3000:3000 dawitsishu/code-discuss:client
+  !! Make sure to install docker on your machine <br />
+ * pull the server docker image file<br /><br />
+         docker pull  dawitsishu/code-discuss:server<br /><br />
+ * pull the client docker image file<br /><br />
+        docker pull  dawitsishu/code-discuss:client<br /><br />
+ * run the downloaded client image files by building a container<br /><br />
+        docker run --name <prefered-container-name> -p 3000:3000 dawitsishu/code-discuss:client<br /><br />
+ * run the downloaded server image files by building a container<br /><br />
+        docker run --name <prefered-container-name> -p 3000:3000 dawitsishu/code-discuss:client<br /><br />
 
 
 ## Getting Started
 cloning and running locally with node-js
-1. Clone the repository:
+1. Clone the repository: <br />
   https://github.com/DawitSishu/code-discussion
-2. move to server folder
-   cd server
-3. Install the dependencies:
-    npm install
-4. start the server
-    npm server.js
-4. move to client folder
-    cd ..
-    cd client
-5. Install the dependencies
-   npm install
-4. Start the client:
-   npm start
+2. move to server folder:<br />
+   cd server<br />
+3. Install the dependencies:<br />
+    npm install<br />
+4. start the server<br />
+    npm server.js<br />
+4. move to client folder<br />
+    cd ..<br />
+    cd client<br />
+5. Install the dependencies<br />
+   npm install<br />
+4. Start the client:<br />
+   npm start<br />
 
 
 ## Contributing
