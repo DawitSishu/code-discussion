@@ -19,8 +19,8 @@ function SignIn({handleSignIn,loadig}) {
       }}  
     >
 
-        {/* <Typography variant='h2'>Code-Discussion APP</Typography>
-        <br/><br/> */}
+        <Typography variant='h2'>Code-Discussion APP</Typography>
+        <br/><br/>
         <Button onClick={handleSignIn} disabled={loadig} variant="contained" sx={{width:"50vw" ,textTransform:" lowercase !important"}} >
             <GoogleIcon sx={{ mr: 2}} />{'  Sign-in With Google'}  
          </Button>

@@ -29,8 +29,6 @@ connectToDb()
          console.log(messageData);
          io.to(messageData.room).emit("newMsg",mainMessage)
        })
-       //when someone jons send all the previous
-       //messages
        socket.on("joinRoom",async room=>{
          socket.join(room.room)
          const RoomDataUser = await Rooms.find({ roomname : room.room,uid:room.uid});
@@ -58,11 +56,6 @@ connectToDb()
         socket.emit('oldMsg',oldMsg)
        })
 
-      //  socket.on("leaveRoom",async room=>{
-      //  const toBeDeleted =  await Rooms.find({uid:room.uid});
-      //  const deleted = await Rooms.findByIdAndDelete(toBeDeleted[0]._id)
-      //  socket.leave(room.room)
-      //  })
 
        socket.on("leaveRoom", async room =>{
         const RoomDataUser = await Rooms.find({uid:room.uid,roomname:room.room});

@@ -5,7 +5,6 @@ import {auth,provider} from './firebase'
 import {signInWithPopup} from 'firebase/auth'
 import Room from './Components/Room/Room';
 import RoomSelector from './Components/utils/RoomSelector';
-import { Button } from '@mui/material';
 import SignIn from './Components/utils/SignIn';
 
 
@@ -16,12 +15,9 @@ let availableRooms = [
   "python",
   "c++"
 ]
-let id =''
 const socket = io.connect("http://localhost:5000");
 socket.on("connect", () => {
   console.log(socket); 
-  id=socket.id
-  console.log(id);
 })
 function App() {
   const [userRoom, setUserRoom] = useState('')
@@ -79,7 +75,6 @@ function App() {
   })
 
   socket.on("oldMsg",msgs=>{
-    console.log(msgs);
     setChatMessage([...msgs])
   })
 
@@ -92,7 +87,6 @@ function App() {
   }
   const handleRoom = (roomVal) =>{
     setInRoom(true)
-    console.log(roomVal);
     setUserRoom(roomVal)
     // setRoom(roomVal)
     socket.emit("joinRoom",{room: roomVal, username:user.displayName,uid:user.uid})
@@ -105,7 +99,6 @@ function App() {
     //leave a room btn(conditionally render it)  --done
     //show online ppl using id(in room firebase)
     <>
-      {rooomData && console.log(rooomData)}
       {
         !user  ? <SignIn handleSignIn={handleSignIn} loadig={loadig}/>
       

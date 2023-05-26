@@ -5,7 +5,6 @@ import moment from "moment";
 
 function Message({message,ID,username}) {
   let time = moment(message.createdAt);
-  console.log(time);
     const boxStyle = {
             overflowWrap:"break-word",
             wordWrap:"break-word",

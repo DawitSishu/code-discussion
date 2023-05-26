@@ -11,26 +11,9 @@ function Room({onSubmit,messages,senderId,canSend,username,roomUsers,handleSigno
 const onSend = (data)=>{
     onSubmit(data)
 }
-    // const messagesEndRef = useRef(null)
-    // const scrollToBottom = () => {
-    //     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-    //   }
-    
-    //   useEffect(() => {
-    //     scrollToBottom()
-    //   }, messages);
-  
-
   return (
     
     <Grid  m={5}
-    // sx={{
-    //     backgroundImage: `url(${bg})`,
-    //     backgroundRepeat: 'no-repeat',
-    //     backgroundSize: 'cover',
-    //     backgroundPosition: 'center',
-    //     minHeight: '100vh', 
-    // }}
     > 
    <Grid 
     sx={{
@@ -51,16 +34,8 @@ const onSend = (data)=>{
         ID={senderId}
         />
     </Grid>
-    <Grid item xs={10} md={7} sx={
-    {
-        
-        // borderRadius:5,
-        // boxShadow: "10px 10px 10px 10px grey",
-        // marginTop: 10,
-        // padding:5
-        // Left: 10,  
-    }
-        }>
+    <Grid item xs={10} md={7} 
+        >
      
         <Grid   sx={{maxHeight: '60vh',overflowY: "hidden"}}>
         <ScrollableFeed forceScroll={true}>
