@@ -44,7 +44,7 @@ connectToDb()
           })
           if(RoomData.length == 0){
             console.log('no room data');
-            io.to(room.room).emit("rooomData",[userRoom])
+            io.to(room.room).emit("roomData",[userRoom])
           }else{
             console.log(' room data');
             RoomData.push(userRoom)
@@ -52,7 +52,7 @@ connectToDb()
           }
           
         }else{
-          io.to(room.room).emit("rooomData",RoomData)
+          io.to(room.room).emit("roomData",RoomData)
         }
         const oldMsg = await Messages.find({room: room.room})
         socket.emit('oldMsg',oldMsg)
@@ -65,10 +65,12 @@ connectToDb()
       //  })
 
        socket.on("leaveRoom", async room =>{
-        const RoomDataUser = await Rooms.find({uid:room.uid,roomname:room.room})
+        const RoomDataUser = await Rooms.find({uid:room.uid,roomname:room.room});
         if(RoomDataUser.length != 0){
           const deleted =  await Rooms.findByIdAndDelete(RoomDataUser[0]._id);
           socket.leave(room.room)
+          const RoomData = await Rooms.find({roomname:room.room})
+          io.to(room.room).emit("roomData",RoomData);
         }else{
           socket.emit("error","user Not found")
         }
