@@ -29,7 +29,8 @@ function App() {
   const [inRoom,setInRoom] = useState(false)
   const [loadig,setLoading] = useState(false)
   const [chatMessage,setChatMessage] =useState([])
-  const [rooomData,setRoomData] = useState(null);
+  const [rooomData,setRoomData] = useState([]);
+ 
   
   
   const handleSignIn = async() =>{
@@ -44,18 +45,22 @@ function App() {
    
   }
 
-  socket.on("rooomData",data=>{
-    setRoomData(data)
+  socket.on("roomData",data=>{
+    console.log(data,'data');
+    setRoomData([...data])
   })
 
   const handleSignout = () =>{
+    setChatMessage([])
     setLoading(false)
-    setInRoom('')
+    setUserRoom('')
     setInRoom(false)
+    setRoomData([])
     setUser(null)
+    socket.emit("leaveRoom",{room:userRoom,uid:user.uid,})
   }
 
-
+  socket.on("error",msg => alert(msg))
 
   const handleMsg = (data) => {
       socket.emit("newMsg",
@@ -75,10 +80,14 @@ function App() {
 
   socket.on("oldMsg",msgs=>{
     console.log(msgs);
-    setChatMessage([...chatMessage,...msgs])
+    setChatMessage([...msgs])
   })
 
   const handleRoomLeft = () =>{
+    setUserRoom('')
+    setRoomData([])
+    setInRoom(false)
+    setChatMessage([])
     socket.emit("leaveRoom",{room:userRoom,uid:user.uid})
   }
   const handleRoom = (roomVal) =>{
@@ -86,14 +95,14 @@ function App() {
     console.log(roomVal);
     setUserRoom(roomVal)
     // setRoom(roomVal)
-    // socket.emit("joinRoom",{room: roomVal, username:user.displayName,uid:user.uid})
+    socket.emit("joinRoom",{room: roomVal, username:user.displayName,uid:user.uid})
   }
   return (
 
     //firebase auth and use state to conditionally render it  --done
     //even disable send button if the user is not in a room   --done
     // show ppl who r in the room
-    //leave a room btn(conditionally render it)  
+    //leave a room btn(conditionally render it)  --done
     //show online ppl using id(in room firebase)
     <>
       {rooomData && console.log(rooomData)}
@@ -102,8 +111,15 @@ function App() {
       
       : !inRoom ? <RoomSelector  handleRoom={handleRoom} rooms={availableRooms}/>
       :<>
-          <Button onClick={handleSignout}  variant="contained" color='error'>sign out</Button>
-    <Room  onSubmit={handleMsg} messages={chatMessage}  senderId={user.uid} username={user.displayName}/>
+          {/* <Button onClick={handleSignout}  variant="contained" color='error'>sign out</Button> */}
+    <Room  
+        onSubmit={handleMsg} 
+        messages={chatMessage}  
+        senderId={user.uid} 
+        username={user.displayName} 
+        roomUsers={rooomData}
+        handleSignout={handleSignout}
+        onRoomLeft={handleRoomLeft}/>
         </>
       }
     </>

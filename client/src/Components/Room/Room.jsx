@@ -6,7 +6,7 @@ import ScrollableFeed from 'react-scrollable-feed'
 import RoomInfo from "./RoomInfo"
 
 
-function Room({onSubmit,messages,senderId,canSend,username}) {
+function Room({onSubmit,messages,senderId,canSend,username,roomUsers,handleSignout,onRoomLeft}) {
    
 const onSend = (data)=>{
     onSubmit(data)
@@ -44,7 +44,12 @@ const onSend = (data)=>{
    spacing={2}
   >
     <Grid item  xs={10} md={5} >
-       <RoomInfo />
+       <RoomInfo 
+        roomUsers={roomUsers} 
+        handleSignout={handleSignout}
+        onRoomLeft={onRoomLeft}
+        ID={senderId}
+        />
     </Grid>
     <Grid item xs={10} md={7} sx={
     {

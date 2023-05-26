@@ -2,22 +2,11 @@ import { Box,Button, IconButton, Typography } from "@mui/material"
 // import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import PersonIcon from '@mui/icons-material/Person';
 
-function RoomInfo() {
-  const users =[
-    "User",
-    "User",
-    "User",
-    "User",
-    "User",
-    "User",
-    "User",
-    "User",
-    "User",
-    "User",
-  ]
-  const handleSignout = () =>{
-    alert('signed out')
-  }
+function RoomInfo({roomUsers,handleSignout,onRoomLeft,ID}) {
+  // const handleSignout = () =>{
+  //   alert('signed out')
+  // }
+  console.log(roomUsers);
   return (
     <Box 
     sx={{
@@ -37,15 +26,17 @@ function RoomInfo() {
          flexDirection:"column",
       }}>
           {
-            users.map((usr,idx) => 
-            <IconButton key={idx}  fontSize="small" sx={{p:0,m:0,color:"#2196f3 !important"}}  disabled={true}>{usr}<PersonIcon /></IconButton>
+            roomUsers.map((usr,idx) => 
+            <IconButton key={idx}  fontSize="small" sx={{p:0,m:0,color:"#2196f3 !important"}}  disabled={true}><PersonIcon />
+               {usr.uid == ID ? "ME" : usr.username}
+            </IconButton>
           )
           }
       </Box>
     
       <Box>
         <Button onClick={handleSignout}  variant="contained" color="error"sx={{marginRight:5,textTransform:" lowercase !important"}}>sign out</Button>
-        <Button onClick={handleSignout}  variant="contained" sx={{textTransform:" lowercase !important",backgroundColor:"#795548"}}>Leave Room</Button>
+        <Button onClick={onRoomLeft}  variant="contained" sx={{textTransform:" lowercase !important",backgroundColor:"#795548"}}>Leave Room</Button>
       </Box>
     </Box> 
   )
