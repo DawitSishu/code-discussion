@@ -1,5 +1,4 @@
-import { Box, Container, Grid } from "@mui/material"
-import { useRef,useEffect } from "react"
+import {  Grid } from "@mui/material"
 import InputComponent from "./InputComponent"
 import Message from "./Message"
 import ScrollableFeed from 'react-scrollable-feed'
@@ -7,14 +6,11 @@ import RoomInfo from "./RoomInfo"
 
 
 function Room({onSubmit,messages,senderId,canSend,username,roomUsers,handleSignout,onRoomLeft}) {
-   
 const onSend = (data)=>{
     onSubmit(data)
 }
   return (
-    
-    <Grid  m={5}
-    > 
+    <Grid  m={5}> 
    <Grid 
     sx={{
         marginTop:5,
