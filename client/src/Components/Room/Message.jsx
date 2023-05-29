@@ -21,6 +21,7 @@ function Message({message,ID,username}) {
         variant="outlined"
         sx={boxStyle}
       >
+        //channge username to message.username
         <Typography variant="caption" color={"Highlight"}>{ID == message.user_id ? 'Me' : username}</Typography>
         <Typography variant="body1" >{message.message}</Typography>
         <Typography variant="caption" color={"white"}>{time.calendar()}</Typography>
